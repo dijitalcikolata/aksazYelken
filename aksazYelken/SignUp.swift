@@ -6,24 +6,41 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct SignUp: View {
-    @State var name = ""
+    @State var mail = ""
+    @State var pass = ""
     
     var body: some View {
         VStack{
             Text("Üye Ol").padding()
-            TextField("ad", text: $name)
+            TextField("mail", text: $mail)
                 .padding()
                 .background(Color.white).cornerRadius(15)
-                .shadow(color: /*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/.opacity(0.4), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                .shadow(color: .black.opacity(0.4), radius: 10)
                 .padding()
-            TextField("soyad", text: $name)
+            TextField("pass", text: $pass)
                 .padding()
                 .background(Color.white).cornerRadius(15)
-                .shadow(color: /*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/.opacity(0.4), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                .shadow(color: .black.opacity(0.4), radius: 10)
                 .padding()
-                
+            Button("KAYIT") {
+                kayit()
+            }
+        }
+        
+        
+        
+    }
+    
+    func kayit(){
+        Auth.auth().createUser(withEmail: mail, password: pass){ (user, error) in
+            if error != nil {
+             print("Kayıt Başarısız")
+            }else{
+                print("Kayıt başarılı")
+            }
         }
     }
 }
